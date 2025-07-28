@@ -1,41 +1,435 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legal Fee Calculator</title>
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f8fafc;
+            --accent-color: #06b6d4;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --background: #ffffff;
+            --surface: #f1f5f9;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hover: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 120px);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-lg);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-section h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-section p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 300;
+        }
+
+        .calculator-selector {
+            margin-bottom: 3rem;
+        }
+
+        .selector-label {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+
+        .calculator-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .calculator-button:nth-child(1) { animation-delay: 0.1s; }
+        .calculator-button:nth-child(2) { animation-delay: 0.2s; }
+        .calculator-button:nth-child(3) { animation-delay: 0.3s; }
+        .calculator-button:nth-child(4) { animation-delay: 0.4s; }
+        .calculator-button:nth-child(5) { animation-delay: 0.5s; }
+        .calculator-button:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .calculator-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .calculator-button:hover::before {
+            left: 100%;
+        }
+
+        .calculator-button:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .calculator-button:active {
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        .calculator-button i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .calculator-button:hover i {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .calculator-button[href="#"] {
+            background: rgba(255, 255, 255, 0.6);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .calculator-button[href="#"]:hover {
+            transform: none;
+            box-shadow: var(--shadow);
+            border-color: transparent;
+        }
+
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .info-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .info-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+
+        .info-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem 2rem;
+            border-radius: 16px;
+            color: white;
+            font-size: 0.95rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .disclaimer i {
+            margin-right: 0.5rem;
+            color: #fbbf24;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer div {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .developer-info {
+            font-weight: 600;
+            color: white;
+        }
+
+        .contact-info {
+            font-style: italic;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .header-section p {
+                font-size: 1.1rem;
+            }
+
+            .selector-label {
+                font-size: 1.5rem;
+            }
+
+            .button-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 0;
+            }
+
+            .calculator-button {
+                padding: 1.25rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .info-section {
+                padding: 2rem;
+            }
+
+            .info-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .info-section p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-section h1 {
+                font-size: 2rem;
+            }
+
+            .calculator-button {
+                padding: 1rem 1.25rem;
+                font-size: 0.95rem;
+            }
+
+            .calculator-button i {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--accent-color);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
 <body>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
     <div class="container">
         <header class="header-section">
-            <h1><i class="fas fa-calculator me-2"></i> Legal Fee Calculator</h1>
-            <p>Estimate legal fees quickly and easily.</p>
+            <h1><i class="fas fa-calculator"></i> Legal Fee Calculator</h1>
+            <p>Estimate legal fees quickly and easily with our modern, comprehensive tools.</p>
         </header>
 
         <section class="calculator-selector">
             <h2 class="selector-label">Choose a Calculator:</h2>
             <div class="button-grid">
                 <a href="https://courtexcel.netlify.app/courtfee" class="calculator-button"
-                    aria-label="Court/Advocate Fee Calculator">
+                    aria-label="Court/Advocate Fee Calculator" data-tooltip="Calculate court and advocate fees">
                     <i class="fas fa-gavel"></i> Court/Advocate Fee Calculator
                 </a>
                 <a href="https://courtexcel.netlify.app/probate" class="calculator-button"
-                    aria-label="Probate Fee Calculator">
+                    aria-label="Probate Fee Calculator" data-tooltip="Calculate probate-related fees">
                     <i class="fas fa-scroll"></i> Probate Fee Calculator
                 </a>
                 <a href="https://courtexcel.netlify.app/excel" class="calculator-button"
-                    aria-label="Process Fee Calculator">
+                    aria-label="Excel Tools" data-tooltip="Access Excel processing tools">
                     <i class="fas fa-table"></i> Excel Tools
                 </a>
-                <a href="https://yearwisedata.netlify.app/" class="calculator-button" aria-label="Other Fee Calculator">
+                <a href="https://yearwisedata.netlify.app/" class="calculator-button" 
+                    aria-label="Year Wise Data" data-tooltip="View historical legal data">
                     <i class="fas fa-chart-line"></i> Year Wise Data
                 </a>
-                <a href="#" class="calculator-button" aria-label="Stamp Fee Calculator">
+                <a href="https://myexcelweb.github.io/merge/" class="calculator-button" 
+                    aria-label="Merge Excel Files" data-tooltip="Merge multiple Excel files">
+                    <i class="fas fa-file-excel"></i> Merge Excel Files
+                </a>
+                <a href="#" class="calculator-button" 
+                    aria-label="Stamp Fee Calculator" data-tooltip="Coming soon">
                     <i class="fas fa-certificate"></i> Coming Soon
                 </a>
             </div>
@@ -43,48 +437,259 @@
 
         <section class="info-section">
             <h2>Welcome to the Legal Fee Calculator</h2>
-            <p>Select a calculator above to estimate your legal fees based on the specific type of fee you need to
-                calculate. Our calculators are designed to provide you with an approximate estimate, but always consult
-                with legal professionals for accurate calculations.</p>
-            <p>We provide calculators for Court Fees, Advocate Fees, Process Fees, Probate Fees, and Stamp Fees. Click
-                on the corresponding button to access the calculator you need.</p>
+            <p>Our comprehensive suite of legal fee calculators is designed to provide you with accurate estimates 
+            for various legal services. Each calculator is specifically tailored to handle different types of legal 
+            fees, ensuring you get the most precise calculations possible.</p>
+            <p>We offer specialized calculators for Court Fees, Advocate Fees, Process Fees, Probate Fees, 
+            Excel file processing tools, and data analysis utilities. Simply click on the corresponding button 
+            above to access the calculator that best suits your needs.</p>
+            <p>Our tools are regularly updated to reflect current legal fee structures and provide you with 
+            the most accurate estimates. However, we always recommend consulting with qualified legal professionals 
+            for final calculations and legal advice.</p>
         </section>
 
         <div class="disclaimer">
-            <i class="fas fa-info-circle"></i> This Legal Fee Calculator is for informational purposes only and does not
-            carry any legal authority. Consult with legal professionals for precise calculations.
+            <i class="fas fa-info-circle"></i> 
+            This Legal Fee Calculator is for informational purposes only and does not carry any legal authority. 
+            Always consult with qualified legal professionals for precise calculations and legal advice.
         </div>
     </div>
 
     <footer class="footer">
         <div class="developer-info">
-            Designed and developed by Parimal J. Hodar.
+            Designed and developed by Parimal J. Hodar
         </div>
         <div class="disclaimer-container">
-            This is a tool to help estimate legal fees and is not legal advice.
+            This is a professional tool to help estimate legal fees and is not legal advice.
         </div>
         <div class="contact-info">
-            For queries, contact: parimal.court@gmail.com
+            For queries and support, contact: parimal.court@gmail.com
         </div>
     </footer>
 
     <script>
-        // Button Hover Animation
-        document.querySelectorAll('.calculator-button').forEach(button => {
-            button.addEventListener('mouseover', () => {
-                button.classList.add('hovered');
-            });
-            button.addEventListener('mouseout', () => {
-                button.classList.remove('hovered');
-            });
-        });
+        // Modern JavaScript with enhanced functionality
+        class LegalFeeCalculator {
+            constructor() {
+                this.init();
+            }
 
-        // Initial Fade-In Animation
+            init() {
+                this.setupLoading();
+                this.setupScrollIndicator();
+                this.setupButtonAnimations();
+                this.setupResponsiveFeatures();
+                this.setupAccessibility();
+            }
+
+            setupLoading() {
+                window.addEventListener('load', () => {
+                    setTimeout(() => {
+                        const loading = document.getElementById('loading');
+                        loading.classList.add('hide');
+                        document.body.style.overflow = 'visible';
+                    }, 1000);
+                });
+            }
+
+            setupScrollIndicator() {
+                const scrollIndicator = document.getElementById('scrollIndicator');
+                
+                window.addEventListener('scroll', () => {
+                    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                    scrollIndicator.style.width = scrolled + '%';
+                });
+            }
+
+            setupButtonAnimations() {
+                const buttons = document.querySelectorAll('.calculator-button');
+                
+                buttons.forEach((button, index) => {
+                    // Enhanced hover effects
+                    button.addEventListener('mouseenter', (e) => {
+                        this.createRippleEffect(e);
+                        button.style.transform = 'translateY(-8px) scale(1.02)';
+                    });
+
+                    button.addEventListener('mouseleave', () => {
+                        button.style.transform = '';
+                    });
+
+                    // Click animation
+                    button.addEventListener('click', (e) => {
+                        if (button.getAttribute('href') === '#') {
+                            e.preventDefault();
+                            this.showComingSoonMessage();
+                            return;
+                        }
+                        
+                        this.createClickEffect(e);
+                    });
+
+                    // Intersection Observer for scroll animations
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.style.animationDelay = `${index * 0.1}s`;
+                                entry.target.classList.add('animate-in');
+                            }
+                        });
+                    });
+                    
+                    observer.observe(button);
+                });
+            }
+
+            createRippleEffect(e) {
+                const button = e.currentTarget;
+                const ripple = document.createElement('span');
+                const rect = button.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${x}px;
+                    top: ${y}px;
+                    background: rgba(6, 182, 212, 0.3);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                `;
+                
+                button.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            }
+
+            createClickEffect(e) {
+                const button = e.currentTarget;
+                button.style.transform = 'translateY(-4px) scale(1.01)';
+                
+                setTimeout(() => {
+                    button.style.transform = 'translateY(-8px) scale(1.02)';
+                }, 150);
+            }
+
+            showComingSoonMessage() {
+                const message = document.createElement('div');
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0, 0, 0, 0.9);
+                    color: white;
+                    padding: 2rem;
+                    border-radius: 16px;
+                    z-index: 10000;
+                    text-align: center;
+                    font-size: 1.2rem;
+                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+                    animation: fadeIn 0.3s ease-out;
+                `;
+                
+                message.innerHTML = `
+                    <i class="fas fa-clock" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: #06b6d4;"></i>
+                    <strong>Coming Soon!</strong><br>
+                    This feature is under development and will be available shortly.
+                `;
+                
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.style.animation = 'fadeOut 0.3s ease-out forwards';
+                    setTimeout(() => message.remove(), 300);
+                }, 3000);
+            }
+
+            setupResponsiveFeatures() {
+                // Handle orientation change
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                    }, 100);
+                });
+
+                // Dynamic viewport height adjustment
+                const setVH = () => {
+                    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+                };
+                
+                setVH();
+                window.addEventListener('resize', setVH);
+            }
+
+            setupAccessibility() {
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Tab') {
+                        document.body.classList.add('keyboard-navigation');
+                    }
+                });
+
+                document.addEventListener('mousedown', () => {
+                    document.body.classList.remove('keyboard-navigation');
+                });
+
+                // Focus management
+                const focusableElements = document.querySelectorAll('a, button, [tabindex]');
+                focusableElements.forEach(element => {
+                    element.addEventListener('focus', () => {
+                        element.style.outline = '2px solid #06b6d4';
+                        element.style.outlineOffset = '2px';
+                    });
+
+                    element.addEventListener('blur', () => {
+                        element.style.outline = '';
+                        element.style.outlineOffset = '';
+                    });
+                });
+            }
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: translate(-50%, -50%) scale(0.9);
+                }
+            }
+            
+            .keyboard-navigation *:focus {
+                outline: 2px solid #06b6d4 !important;
+                outline-offset: 2px !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
-            document.body.classList.add('fade-in');
+            new LegalFeeCalculator();
         });
 
+        // Performance optimization
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Service worker registration would go here
+                console.log('Legal Fee Calculator loaded successfully');
+            });
+        }
     </script>
 </body>
-
 </html>
