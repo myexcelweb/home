@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legal Fee Calculator</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>MyExcelWeb - Professional Digital Tools Suite</title>
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🛠️&lt;/text&gt;&lt;/svg&gt;">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,681 +14,811 @@
         }
 
         :root {
-            --primary-color: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary-color: #f8fafc;
-            --accent-color: #06b6d4;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #4facfe;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --text-light: #ffffff;
+            
             --background: #ffffff;
-            --surface: #f1f5f9;
+            --surface: #f7fafc;
+            --card-bg: rgba(255, 255, 255, 0.95);
             --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-hover: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.7;
+            line-height: 1.6;
             color: var(--text-primary);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             min-height: 100vh;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
+            overflow-x: hidden;
         }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
 
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .domain-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
-            min-height: calc(100vh - 120px);
         }
 
-        .header-section {
+        /* Hero Section */
+        .hero-section {
             text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: var(--shadow-lg);
-            animation: slideDown 0.8s ease-out;
+            padding: 4rem 2rem;
+            margin-bottom: 4rem;
         }
 
-        @keyframes slideDown {
-            from {
-                transform: translateY(-30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .header-section h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            color: white;
-            margin-bottom: 1rem;
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
         }
 
-        .header-section p {
-            font-size: 1.25rem;
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
             color: rgba(255, 255, 255, 0.9);
-            font-weight: 300;
-        }
-
-        .calculator-selector {
-            margin-bottom: 3rem;
-        }
-
-        .selector-label {
-            font-size: 2rem;
-            font-weight: 700;
-            text-align: center;
             margin-bottom: 2rem;
-            color: white;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Tools Grid */
+        .tools-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 1rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            padding: 0 1rem;
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .calculator-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1.5rem 2rem;
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--text-primary);
-            text-decoration: none;
-            border-radius: 16px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid transparent;
-            box-shadow: var(--shadow);
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
-            animation: slideUp 0.6s ease-out;
-            animation-fill-mode: both;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
-        .calculator-button:nth-child(1) { animation-delay: 0.1s; }
-        .calculator-button:nth-child(2) { animation-delay: 0.2s; }
-        .calculator-button:nth-child(3) { animation-delay: 0.3s; }
-        .calculator-button:nth-child(4) { animation-delay: 0.4s; }
-        .calculator-button:nth-child(5) { animation-delay: 0.5s; }
-        .calculator-button:nth-child(6) { animation-delay: 0.6s; }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .calculator-button::before {
+        .tool-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
-        .calculator-button:hover::before {
+        .tool-card:hover::before {
             left: 100%;
         }
 
-        .calculator-button:hover {
+        .tool-card:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: var(--accent-color);
-            background: rgba(255, 255, 255, 1);
+            box-shadow: var(--shadow-xl);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
-        .calculator-button:active {
-            transform: translateY(-4px) scale(1.01);
-        }
-
-        .calculator-button i {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .calculator-button:hover i {
-            color: var(--accent-color);
-            transform: scale(1.1);
-        }
-
-        .calculator-button[href="#"] {
-            background: rgba(255, 255, 255, 0.6);
-            color: var(--text-secondary);
-            cursor: not-allowed;
-        }
-
-        .calculator-button[href="#"]:hover {
-            transform: none;
-            box-shadow: var(--shadow);
-            border-color: transparent;
-        }
-
-        .info-section {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 2.5rem;
+        .tool-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--primary-gradient);
             border-radius: 20px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                transform: translateY(30px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .info-section h2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 2rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .tool-card:hover .tool-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--accent-gradient);
+        }
+
+        .tool-title {
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            text-align: center;
             margin-bottom: 1.5rem;
+        }
+
+        .tool-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .tool-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .tool-features li i {
+            color: var(--success-color);
+            font-size: 1rem;
+            width: 16px;
+        }
+
+        .tool-button {
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tool-button:hover {
+            background: var(--accent-gradient);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Coming Soon Card */
+        .coming-soon {
+            opacity: 0.7;
             position: relative;
         }
 
-        .info-section h2::after {
-            content: '';
+        .coming-soon::after {
+            content: 'Coming Soon';
             position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
-        .info-section p {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            line-height: 1.8;
-        }
-
-        .disclaimer {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1.5rem 2rem;
-            border-radius: 16px;
+            top: 1rem;
+            right: 1rem;
+            background: var(--warning-color);
             color: white;
-            font-size: 0.95rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .coming-soon:hover {
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        /* Features Section */
+        .features-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius);
+            padding: 3rem 2rem;
+            margin-bottom: 4rem;
             text-align: center;
-            box-shadow: var(--shadow);
-            animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
-        .disclaimer i {
-            margin-right: 0.5rem;
-            color: #fbbf24;
+        .feature-item {
+            color: var(--text-light);
         }
 
+        .feature-item i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
         .footer {
-            background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.9);
             text-align: center;
-            padding: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 2rem 2rem;
         }
 
-        .footer div {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-description {
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
         }
 
         .developer-info {
             font-weight: 600;
-            color: white;
+            margin-bottom: 0.5rem;
         }
 
         .contact-info {
+            opacity: 0.8;
             font-style: italic;
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
+        /* Responsive Design */
+                    @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
 
-            .header-section h1 {
-                font-size: 2.5rem;
+            .hero-section {
+                padding: 2rem 1rem;
             }
 
-            .header-section p {
-                font-size: 1.1rem;
-            }
-
-            .selector-label {
-                font-size: 1.5rem;
-            }
-
-            .button-grid {
+            .tools-grid {
                 grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 0;
+                gap: 1.5rem;
             }
 
-            .calculator-button {
-                padding: 1.25rem 1.5rem;
-                font-size: 1rem;
+            .tool-card {
+                padding: 1.5rem;
             }
 
-            .info-section {
-                padding: 2rem;
+            .nav-container {
+                padding: 0 1rem;
             }
 
-            .info-section h2 {
-                font-size: 1.5rem;
+            .domain-badge {
+                display: none;
             }
 
-            .info-section p {
-                font-size: 1rem;
+            .features-section {
+                padding: 2rem 1rem;
             }
         }
 
         @media (max-width: 480px) {
-            .header-section h1 {
-                font-size: 2rem;
+            .tool-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
             }
 
-            .calculator-button {
-                padding: 1rem 1.25rem;
-                font-size: 0.95rem;
-            }
-
-            .calculator-button i {
+            .tool-title {
                 font-size: 1.25rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
             }
         }
 
         /* Loading Animation */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
-        }
-
-        .loading.hide {
+        .fade-in {
             opacity: 0;
-            pointer-events: none;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease-out forwards;
         }
 
-        .spinner {
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+        .fade-in:nth-child(5) { animation-delay: 0.5s; }
+        .fade-in:nth-child(6) { animation-delay: 0.6s; }
+        .fade-in:nth-child(7) { animation-delay: 0.7s; }
+
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
             width: 50px;
             height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-top: 5px solid white;
+            background: var(--accent-gradient);
+            border: none;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 4px;
-            background: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
             z-index: 1000;
-            transition: width 0.3s ease;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
         }
     </style>
 </head>
 <body>
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
-    </div>
+    <div class="animated-bg"></div>
+    
+    <header class="header">
+        <nav class="nav-container">
+            <a href="https://myexcelweb.github.io/home/" class="logo">
+                <i class="fas fa-tools"></i>
+                <span>MyExcelWeb</span>
+                <div class="domain-badge">myexcelweb.github.io</div>
+            </a>
+        </nav>
+    </header>
 
-    <div class="scroll-indicator" id="scrollIndicator"></div>
+    <main class="container">
+        <section class="hero-section">
+            <h1 class="hero-title">Professional Digital Tools Suite</h1>
+            <p class="hero-subtitle">Transform your workflow with our comprehensive collection of professional tools</p>
+            <div style="background: rgba(255, 255, 255, 0.15); padding: 1rem 2rem; border-radius: 30px; display: inline-block; margin-bottom: 2rem; backdrop-filter: blur(10px);">
+                <span style="color: var(--text-light); font-weight: 600; font-size: 1.1rem;">🌐 Visit us at: </span>
+                <span style="color: white; font-weight: 700; font-size: 1.2rem;">myexcelweb.github.io/home</span>
+            </div>
+            <p class="hero-description">
+                Streamline your daily tasks with our powerful suite of digital tools designed for professionals, 
+                businesses, and individuals who demand efficiency and precision.
+            </p>
+        </section>
 
-    <div class="container">
-        <header class="header-section">
-            <h1><i class="fas fa-calculator"></i> Legal Fee Calculator</h1>
-            <p>Estimate legal fees quickly and easily with our modern, comprehensive tools.</p>
-        </header>
+        <section class="tools-section">
+            <h2 class="section-title">Our Professional Tools</h2>
+            <p class="section-subtitle">
+                Choose from our comprehensive collection of specialized tools designed to boost your productivity
+            </p>
+            
+            <div class="tools-grid">
+                <!-- PDF Editor -->
+                <a href="https://pdf-pro.streamlit.app" class="tool-card fade-in">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <h3 class="tool-title">PDF Document Editor Pro</h3>
+                    <p class="tool-description">
+                        Professional PDF editing solution with advanced features. Merge, compress, split, insert pages, and add watermarks with ease.
+                    </p>
+                    <ul class="tool-features">
+                        <li><i class="fas fa-check"></i> Merge multiple PDF files</li>
+                        <li><i class="fas fa-check"></i> Advanced PDF compression</li>
+                        <li><i class="fas fa-check"></i> Split by page ranges or individual pages</li>
+                        <li><i class="fas fa-check"></i> Insert pages at specific positions</li>
+                        <li><i class="fas fa-check"></i> Add watermarks and stamps</li>
+                    </ul>
+                    <button class="tool-button">Launch PDF Editor</button>
+                </a>
 
-        <section class="calculator-selector">
-            <h2 class="selector-label">Choose a Calculator:</h2>
-            <div class="button-grid">
-                <a href="https://courtexcel.netlify.app/courtfee" class="calculator-button"
-                    aria-label="Court/Advocate Fee Calculator" data-tooltip="Calculate court and advocate fees">
-                    <i class="fas fa-gavel"></i> Court/Advocate Fee Calculator
+                <!-- Image Background Editor -->
+                <a href="#" class="tool-card fade-in coming-soon">
+                    <div class="tool-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3 class="tool-title">Image Background Studio</h3>
+                    <p class="tool-description">
+                        Advanced image editing tool for background removal and replacement. Create professional images in seconds.
+                    </p>
+                    <ul class="tool-features">
+                        <li><i class="fas fa-check"></i> AI-powered background removal</li>
+                        <li><i class="fas fa-check"></i> Custom background replacement</li>
+                        <li><i class="fas fa-check"></i> Batch processing support</li>
+                        <li><i class="fas fa-check"></i> High-resolution output</li>
+                        <li><i class="fas fa-check"></i> Multiple format support</li>
+                    </ul>
+                    <button class="tool-button">Launch Image Studio</button>
                 </a>
-                <a href="https://courtexcel.netlify.app/probate" class="calculator-button"
-                    aria-label="Probate Fee Calculator" data-tooltip="Calculate probate-related fees">
-                    <i class="fas fa-scroll"></i> Probate Fee Calculator
+
+                <!-- Excel File Merger -->
+                <a href="https://myexcelweb.github.io/merge/" class="tool-card fade-in">
+                    <div class="tool-icon">
+                        <i class="fas fa-file-excel"></i>
+                    </div>
+                    <h3 class="tool-title">Excel File Merger Pro</h3>
+                    <p class="tool-description">
+                        Powerful tool to merge multiple Excel files into one comprehensive workbook. Maintain formatting and data integrity.
+                    </p>
+                    <ul class="tool-features">
+                        <li><i class="fas fa-check"></i> Merge multiple Excel files</li>
+                        <li><i class="fas fa-check"></i> Preserve original formatting</li>
+                        <li><i class="fas fa-check"></i> Custom sheet organization</li>
+                        <li><i class="fas fa-check"></i> Data validation</li>
+                        <li><i class="fas fa-check"></i> Batch processing</li>
+                    </ul>
+                    <button class="tool-button">Launch Excel Merger</button>
                 </a>
-                <a href="https://courtexcel.netlify.app/excel" class="calculator-button"
-                    aria-label="Excel Tools" data-tooltip="Access Excel processing tools">
-                    <i class="fas fa-table"></i> Excel Tools
+
+                <!-- Legal Fee Calculator Suite -->
+                <a href="https://courtexcel.netlify.app/home" class="tool-card fade-in">
+                    <div class="tool-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3 class="tool-title">Legal Fee Calculator Suite</h3>
+                    <p class="tool-description">
+                        Comprehensive legal fee calculation system including court fees, advocate fees, and probate procedures all in one platform.
+                    </p>
+                    <ul class="tool-features">
+                        <li><i class="fas fa-check"></i> Court fee calculations</li>
+                        <li><i class="fas fa-check"></i> Advocate fee estimation</li>
+                        <li><i class="fas fa-check"></i> Probate fee calculator (integrated)</li>
+                        <li><i class="fas fa-check"></i> Up-to-date fee structures</li>
+                        <li><i class="fas fa-check"></i> Detailed breakdowns</li>
+                    </ul>
+                    <button class="tool-button">Launch Calculator Suite</button>
                 </a>
-                <a href="https://yearwisedata.netlify.app/" class="calculator-button" 
-                    aria-label="Year Wise Data" data-tooltip="View historical legal data">
-                    <i class="fas fa-chart-line"></i> Year Wise Data
+
+                <!-- Excel Processing Tools -->
+                <a href="https://courtexcel.netlify.app/excel" class="tool-card fade-in">
+                    <div class="tool-icon">
+                        <i class="fas fa-table"></i>
+                    </div>
+                    <h3 class="tool-title">Excel Processing Center</h3>
+                    <p class="tool-description">
+                        Advanced Excel processing tools for data manipulation, analysis, and transformation between formats.
+                    </p>
+                    <ul class="tool-features">
+                        <li><i class="fas fa-check"></i> Excel to Excel conversion</li>
+                        <li><i class="fas fa-check"></i> Data cleaning and validation</li>
+                        <li><i class="fas fa-check"></i> Format standardization</li>
+                        <li><i class="fas fa-check"></i> Bulk operations</li>
+                        <li><i class="fas fa-check"></i> Error detection</li>
+                    </ul>
+                    <button class="tool-button">Launch Excel Tools</button>
                 </a>
-                <a href="https://myexcelweb.github.io/merge/" class="calculator-button" 
-                    aria-label="Merge Excel Files" data-tooltip="Merge multiple Excel files">
-                    <i class="fas fa-file-excel"></i> Merge Excel Files
-                </a>
-                <a href="#" class="calculator-button" 
-                    aria-label="Stamp Fee Calculator" data-tooltip="Coming soon">
-                    <i class="fas fa-certificate"></i> Coming Soon
+
+                <!-- Year-wise Data Analytics -->
+                <a href="https://yearwisedata.netlify.app/" class="tool-card fade-in">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="tool-title">Year-wise Data Analytics</h3>
+                    <p class="tool-description">
+                        Comprehensive data analysis tool for year-wise reporting with Excel and PDF export capabilities.
+                    </p>
+                    <ul class="tool-features">
+                        <li><i class="fas fa-check"></i> Year-wise data analysis</li>
+                        <li><i class="fas fa-check"></i> Excel report generation</li>
+                        <li><i class="fas fa-check"></i> PDF export functionality</li>
+                        <li><i class="fas fa-check"></i> Visual charts and graphs</li>
+                        <li><i class="fas fa-check"></i> Custom date ranges</li>
+                    </ul>
+                    <button class="tool-button">Launch Analytics</button>
                 </a>
             </div>
         </section>
 
-        <section class="info-section">
-            <h2>Welcome to the Legal Fee Calculator</h2>
-            <p>Our comprehensive suite of legal fee calculators is designed to provide you with accurate estimates 
-            for various legal services. Each calculator is specifically tailored to handle different types of legal 
-            fees, ensuring you get the most precise calculations possible.</p>
-            <p>We offer specialized calculators for Court Fees, Advocate Fees, Process Fees, Probate Fees, 
-            Excel file processing tools, and data analysis utilities. Simply click on the corresponding button 
-            above to access the calculator that best suits your needs.</p>
-            <p>Our tools are regularly updated to reflect current legal fee structures and provide you with 
-            the most accurate estimates. However, we always recommend consulting with qualified legal professionals 
-            for final calculations and legal advice.</p>
+        <section class="features-section">
+            <h2 class="section-title">Why Choose Our Tools?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Fast & Efficient</h3>
+                    <p>Lightning-fast processing with optimized algorithms for maximum efficiency</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure & Private</h3>
+                    <p>Your data is processed securely with privacy protection at every step</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Friendly</h3>
+                    <p>Responsive design that works perfectly on all devices and screen sizes</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-sync"></i>
+                    <h3>Always Updated</h3>
+                    <p>Regular updates with new features and improvements based on user feedback</p>
+                </div>
+            </div>
         </section>
-
-        <div class="disclaimer">
-            <i class="fas fa-info-circle"></i> 
-            This Legal Fee Calculator is for informational purposes only and does not carry any legal authority. 
-            Always consult with qualified legal professionals for precise calculations and legal advice.
-        </div>
-    </div>
+    </main>
 
     <footer class="footer">
-        <div class="developer-info">
-            Designed and developed by Parimal J. Hodar
-        </div>
-        <div class="disclaimer-container">
-            This is a professional tool to help estimate legal fees and is not legal advice.
-        </div>
-        <div class="contact-info">
-            For queries and support, contact: parimal.court@gmail.com
+        <div class="footer-content">
+            <div class="footer-title">MyExcelWeb</div>
+            <p class="footer-description">
+                Professional digital tools suite designed to streamline your workflow and boost productivity. 
+                Trusted by professionals worldwide for reliable, efficient, and secure document processing.
+            </p>
+            
+            <div class="footer-info">
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <p><a href="#tools">Our Tools</a></p>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="https://myexcelweb.github.io/home/">Homepage</a></p>
+                </div>
+                <div class="footer-section">
+                    <h4>Website & Contact</h4>
+                    <p><strong>Website:</strong> <a href="https://myexcelweb.github.io/home/" style="color: #4facfe;">myexcelweb.github.io/home</a></p>
+                    <p><strong>Email:</strong> parimal.court@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="developer-info">
+                    Designed & Developed by Parimal J. Hodar
+                </div>
+                <div class="contact-info">
+                    Professional Digital Solutions | parimal.court@gmail.com
+                </div>
+                <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">
+                    © 2024 MyExcelWeb - <a href="https://myexcelweb.github.io/home/" style="color: #4facfe; text-decoration: none;">myexcelweb.github.io/home</a> | All rights reserved. This platform provides professional tools for document processing and legal calculations.
+                </p>
+            </div>
         </div>
     </footer>
 
+    <button class="scroll-top" id="scrollTop">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
     <script>
-        // Modern JavaScript with enhanced functionality
-        class LegalFeeCalculator {
-            constructor() {
-                this.init();
-            }
-
-            init() {
-                this.setupLoading();
-                this.setupScrollIndicator();
-                this.setupButtonAnimations();
-                this.setupResponsiveFeatures();
-                this.setupAccessibility();
-            }
-
-            setupLoading() {
-                window.addEventListener('load', () => {
-                    setTimeout(() => {
-                        const loading = document.getElementById('loading');
-                        loading.classList.add('hide');
-                        document.body.style.overflow = 'visible';
-                    }, 1000);
-                });
-            }
-
-            setupScrollIndicator() {
-                const scrollIndicator = document.getElementById('scrollIndicator');
-                
-                window.addEventListener('scroll', () => {
-                    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-                    scrollIndicator.style.width = scrolled + '%';
-                });
-            }
-
-            setupButtonAnimations() {
-                const buttons = document.querySelectorAll('.calculator-button');
-                
-                buttons.forEach((button, index) => {
-                    // Enhanced hover effects
-                    button.addEventListener('mouseenter', (e) => {
-                        this.createRippleEffect(e);
-                        button.style.transform = 'translateY(-8px) scale(1.02)';
-                    });
-
-                    button.addEventListener('mouseleave', () => {
-                        button.style.transform = '';
-                    });
-
-                    // Click animation
-                    button.addEventListener('click', (e) => {
-                        if (button.getAttribute('href') === '#') {
-                            e.preventDefault();
-                            this.showComingSoonMessage();
-                            return;
-                        }
-                        
-                        this.createClickEffect(e);
-                    });
-
-                    // Intersection Observer for scroll animations
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.style.animationDelay = `${index * 0.1}s`;
-                                entry.target.classList.add('animate-in');
-                            }
-                        });
-                    });
-                    
-                    observer.observe(button);
-                });
-            }
-
-            createRippleEffect(e) {
-                const button = e.currentTarget;
-                const ripple = document.createElement('span');
-                const rect = button.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.cssText = `
-                    position: absolute;
-                    width: ${size}px;
-                    height: ${size}px;
-                    left: ${x}px;
-                    top: ${y}px;
-                    background: rgba(6, 182, 212, 0.3);
-                    border-radius: 50%;
-                    transform: scale(0);
-                    animation: ripple 0.6s linear;
-                    pointer-events: none;
-                `;
-                
-                button.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            }
-
-            createClickEffect(e) {
-                const button = e.currentTarget;
-                button.style.transform = 'translateY(-4px) scale(1.01)';
-                
-                setTimeout(() => {
-                    button.style.transform = 'translateY(-8px) scale(1.02)';
-                }, 150);
-            }
-
-            showComingSoonMessage() {
-                const message = document.createElement('div');
-                message.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    background: rgba(0, 0, 0, 0.9);
-                    color: white;
-                    padding: 2rem;
-                    border-radius: 16px;
-                    z-index: 10000;
-                    text-align: center;
-                    font-size: 1.2rem;
-                    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-                    animation: fadeIn 0.3s ease-out;
-                `;
-                
-                message.innerHTML = `
-                    <i class="fas fa-clock" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: #06b6d4;"></i>
-                    <strong>Coming Soon!</strong><br>
-                    This feature is under development and will be available shortly.
-                `;
-                
-                document.body.appendChild(message);
-                
-                setTimeout(() => {
-                    message.style.animation = 'fadeOut 0.3s ease-out forwards';
-                    setTimeout(() => message.remove(), 300);
-                }, 3000);
-            }
-
-            setupResponsiveFeatures() {
-                // Handle orientation change
-                window.addEventListener('orientationchange', () => {
-                    setTimeout(() => {
-                        window.scrollTo(0, 0);
-                    }, 100);
-                });
-
-                // Dynamic viewport height adjustment
-                const setVH = () => {
-                    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-                };
-                
-                setVH();
-                window.addEventListener('resize', setVH);
-            }
-
-            setupAccessibility() {
-                // Keyboard navigation
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Tab') {
-                        document.body.classList.add('keyboard-navigation');
+        // Smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fade in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
                     }
                 });
+            });
 
-                document.addEventListener('mousedown', () => {
-                    document.body.classList.remove('keyboard-navigation');
-                });
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
 
-                // Focus management
-                const focusableElements = document.querySelectorAll('a, button, [tabindex]');
-                focusableElements.forEach(element => {
-                    element.addEventListener('focus', () => {
-                        element.style.outline = '2px solid #06b6d4';
-                        element.style.outlineOffset = '2px';
-                    });
-
-                    element.addEventListener('blur', () => {
-                        element.style.outline = '';
-                        element.style.outlineOffset = '';
-                    });
-                });
-            }
-        }
-
-        // Add CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
+            // Scroll to top button
+            const scrollTopBtn = document.getElementById('scrollTop');
             
-            @keyframes fadeOut {
-                to {
-                    opacity: 0;
-                    transform: translate(-50%, -50%) scale(0.9);
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
                 }
-            }
-            
-            .keyboard-navigation *:focus {
-                outline: 2px solid #06b6d4 !important;
-                outline-offset: 2px !important;
-            }
-        `;
-        document.head.appendChild(style);
+            });
 
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', () => {
-            new LegalFeeCalculator();
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Coming soon notification
+            document.querySelectorAll('.coming-soon').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const title = card.querySelector('.tool-title').textContent;
+                    showNotification('This feature is coming soon! Stay tuned for updates.');
+                });
+            });
         });
 
-        // Performance optimization
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Service worker registration would go here
-                console.log('Legal Fee Calculator loaded successfully');
-            });
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--accent-gradient);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 12px;
+                z-index: 10000;
+                box-shadow: var(--shadow-lg);
+                animation: slideInRight 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease-out forwards';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
         }
     </script>
 </body>
