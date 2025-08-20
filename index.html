@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyExcelWeb - Professional Digital Tools Suite</title>
+    <title>SmartFiles & MyExcelWeb - Advanced Professional Digital Tools Suite</title>
     <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;🛠️&lt;/text&gt;&lt;/svg&gt;">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,47 +15,70 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            /* Advanced Color Palette */
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --warning: linear-gradient(135deg, #fc466b 0%, #3f5efb 100%);
+            --dark: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
             
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-color: #4facfe;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            
-            --text-primary: #1a202c;
-            --text-secondary: #4a5568;
+            /* Solid Colors */
+            --primary-solid: #667eea;
             --text-light: #ffffff;
+            --text-dark: #1a1a2e;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --surface: rgba(255, 255, 255, 0.05);
             
-            --background: #ffffff;
-            --surface: #f7fafc;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --border: #e2e8f0;
+            /* Shadows & Effects */
+            --shadow-soft: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --shadow-hard: 0 20px 40px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 30px rgba(102, 126, 234, 0.4);
+            --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.1);
             
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.1);
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+            --backdrop-blur: blur(20px);
             
-            --border-radius: 16px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Animations */
+            --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --border-radius: 20px;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--primary-gradient);
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Animated Background */
-        .animated-bg {
+        /* Advanced Background Animation */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #4facfe);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Particles */
+        .particles {
             position: fixed;
             top: 0;
             left: 0;
@@ -64,210 +88,397 @@
             overflow: hidden;
         }
 
-        .animated-bg::before {
-            content: '';
+        .particle {
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(odd) {
+            animation-direction: reverse;
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-            50% { transform: translate(-50%, -50%) rotate(180deg); }
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
         }
 
-        /* Header */
+        /* Header with Advanced Glassmorphism */
         .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
+            width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border-bottom: var(--glass-border);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: var(--transition-smooth);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow-soft);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 1rem;
-            color: var(--text-light);
             text-decoration: none;
-            font-size: 1.5rem;
+            color: var(--text-light);
             font-weight: 800;
+            font-size: 1.5rem;
+            transition: var(--transition-bounce);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            animation: logoSpin 10s linear infinite;
+        }
+
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .domain-badges {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
         }
 
         .domain-badge {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--glass-border);
             padding: 0.5rem 1rem;
-            border-radius: 20px;
+            border-radius: 50px;
             font-size: 0.8rem;
-            margin-left: 1rem;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: var(--transition-smooth);
         }
 
-        .logo i {
-            font-size: 2rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .domain-badge:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+        .domain-badge.primary {
+            background: var(--accent);
         }
 
         /* Hero Section */
-        .hero-section {
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            padding: 4rem 2rem;
-            margin-bottom: 4rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            z-index: 10;
         }
 
         .hero-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
-            color: var(--text-light);
             margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)); }
+            100% { filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.5)); }
         }
 
         .hero-subtitle {
-            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1.2rem, 3vw, 2rem);
             margin-bottom: 2rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
+            opacity: 0.9;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .dual-sites-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .site-info {
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--glass-border);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition-bounce);
+        }
+
+        .site-info:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .site-info.primary {
+            background: var(--accent);
         }
 
         .hero-description {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-
-        /* Tools Grid */
-        .tools-section {
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            text-align: center;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .section-subtitle {
-            text-align: center;
             font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 3rem;
-            max-width: 600px;
+            opacity: 0.8;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
+            animation: fadeInUp 1s ease-out 1s both;
         }
 
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            padding: 1rem 0;
+        .cta-container {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1.5s both;
         }
 
-        .tool-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition);
+        .cta-button {
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--glass-border);
+            color: var(--text-light);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition-bounce);
             position: relative;
             overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            display: block;
         }
 
-        .tool-card::before {
+        .cta-button::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            background: var(--accent);
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .cta-primary {
+            background: var(--accent);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .cta-secondary {
+            background: var(--secondary);
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            animation: floatCard 8s ease-in-out infinite;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .floating-card:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-card:nth-child(2) { top: 20%; right: 15%; animation-delay: 2s; }
+        .floating-card:nth-child(3) { bottom: 20%; left: 15%; animation-delay: 4s; }
+        .floating-card:nth-child(4) { bottom: 30%; right: 10%; animation-delay: 6s; }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(2deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+            75% { transform: translateY(-30px) rotate(1deg); }
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Advanced Tool Cards */
+        .tool-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: var(--glass-border);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transform-style: preserve-3d;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            opacity: 0;
+            transition: var(--transition-smooth);
         }
 
         .tool-card:hover::before {
-            left: 100%;
+            opacity: 1;
         }
 
         .tool-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: var(--shadow-xl);
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: var(--shadow-hard);
             border-color: rgba(255, 255, 255, 0.4);
         }
 
         .tool-icon {
             width: 80px;
             height: 80px;
-            margin: 0 auto 1.5rem;
-            background: var(--primary-gradient);
+            background: var(--accent);
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: white;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-bounce);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+        }
+
+        .tool-icon::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--accent);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition-smooth);
         }
 
         .tool-card:hover .tool-icon {
-            transform: scale(1.1) rotate(5deg);
-            background: var(--accent-gradient);
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .tool-card:hover .tool-icon::after {
+            opacity: 0.3;
+            transform: scale(1.2);
         }
 
         .tool-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-primary);
             margin-bottom: 1rem;
-            text-align: center;
+            color: var(--text-light);
         }
 
         .tool-description {
-            color: var(--text-secondary);
-            line-height: 1.8;
-            text-align: center;
+            opacity: 0.8;
             margin-bottom: 1.5rem;
+            line-height: 1.6;
         }
 
         .tool-features {
@@ -279,107 +490,114 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            color: var(--text-secondary);
             margin-bottom: 0.5rem;
-            font-size: 0.95rem;
+            opacity: 0.9;
         }
 
-        .tool-features li i {
-            color: var(--success-color);
-            font-size: 1rem;
+        .tool-features i {
+            color: #00f2fe;
             width: 16px;
         }
 
         .tool-button {
             width: 100%;
-            background: var(--primary-gradient);
-            color: white;
+            background: var(--accent);
             border: none;
+            color: var(--text-light);
             padding: 1rem 2rem;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 50px;
             font-weight: 600;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: var(--transition);
+            transition: var(--transition-bounce);
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition-smooth);
+        }
+
+        .tool-button:hover::before {
+            left: 100%;
         }
 
         .tool-button:hover {
-            background: var(--accent-gradient);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        /* Coming Soon Card */
-        .coming-soon {
-            opacity: 0.7;
-            position: relative;
-        }
-
-        .coming-soon::after {
-            content: 'Coming Soon';
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--warning-color);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .coming-soon:hover {
-            transform: none;
-            cursor: not-allowed;
+            box-shadow: var(--shadow-glow);
         }
 
         /* Features Section */
         .features-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: var(--border-radius);
-            padding: 3rem 2rem;
-            margin-bottom: 4rem;
-            text-align: center;
+            padding: 5rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border-top: var(--glass-border);
+            border-bottom: var(--glass-border);
         }
 
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 3rem auto 0;
         }
 
         .feature-item {
-            color: var(--text-light);
+            text-align: center;
+            transition: var(--transition-smooth);
         }
 
-        .feature-item i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .feature-item:hover {
+            transform: translateY(-10px);
         }
 
-        .feature-item h3 {
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+            transition: var(--transition-bounce);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .feature-item:hover .feature-icon {
+            transform: scale(1.2) rotate(360deg);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .feature-title {
             font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            opacity: 0.8;
+            line-height: 1.6;
         }
 
         /* Footer */
         .footer {
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.9);
+            background: var(--dark);
+            padding: 4rem 2rem 2rem;
             text-align: center;
-            padding: 3rem 2rem 2rem;
+            border-top: var(--glass-border);
         }
 
         .footer-content {
@@ -387,11 +605,11 @@
             margin: 0 auto;
         }
 
-        .footer-title {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
             margin-bottom: 1rem;
-            background: var(--accent-gradient);
+            background: var(--accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -400,6 +618,9 @@
         .footer-description {
             margin-bottom: 2rem;
             opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .footer-info {
@@ -411,17 +632,18 @@
 
         .footer-section h4 {
             margin-bottom: 1rem;
-            color: white;
+            font-weight: 600;
         }
 
         .footer-section a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
-            transition: var(--transition);
+            transition: var(--transition-smooth);
         }
 
         .footer-section a:hover {
-            color: white;
+            color: var(--text-light);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .footer-bottom {
@@ -437,17 +659,104 @@
 
         .contact-info {
             opacity: 0.8;
-            font-style: italic;
         }
 
-        /* Responsive Design */
-                    @media (max-width: 768px) {
-            .container {
+        .site-urls {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .site-urls a {
+            color: #4facfe;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            background: rgba(79, 172, 254, 0.1);
+            border-radius: 25px;
+            transition: var(--transition-smooth);
+        }
+
+        .site-urls a:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Scroll to Top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border: none;
+            border-radius: 50%;
+            color: var(--text-light);
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-bounce);
+            z-index: 1000;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: var(--backdrop-blur);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        /* Animation Classes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        /* Advanced Responsive Design */
+        @media (max-width: 1200px) {
+            .tools-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .domain-badges {
+                display: none;
+            }
+
+            .hero {
                 padding: 1rem;
             }
 
-            .hero-section {
-                padding: 2rem 1rem;
+            .dual-sites-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .tools-section {
+                padding: 3rem 1rem;
             }
 
             .tools-grid {
@@ -456,19 +765,30 @@
             }
 
             .tool-card {
-                padding: 1.5rem;
-            }
-
-            .nav-container {
-                padding: 0 1rem;
-            }
-
-            .domain-badge {
-                display: none;
+                padding: 2rem;
             }
 
             .features-section {
-                padding: 2rem 1rem;
+                padding: 3rem 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            .site-urls {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
 
@@ -479,350 +799,611 @@
                 font-size: 1.5rem;
             }
 
-            .tool-title {
-                font-size: 1.25rem;
+            .feature-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
             }
 
-            .hero-title {
-                font-size: 2rem;
+            .scroll-top {
+                width: 50px;
+                height: 50px;
+                bottom: 1rem;
+                right: 1rem;
             }
         }
 
         /* Loading Animation */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in:nth-child(1) { animation-delay: 0.1s; }
-        .fade-in:nth-child(2) { animation-delay: 0.2s; }
-        .fade-in:nth-child(3) { animation-delay: 0.3s; }
-        .fade-in:nth-child(4) { animation-delay: 0.4s; }
-        .fade-in:nth-child(5) { animation-delay: 0.5s; }
-        .fade-in:nth-child(6) { animation-delay: 0.6s; }
-        .fade-in:nth-child(7) { animation-delay: 0.7s; }
-
-        /* Scroll to top button */
-        .scroll-top {
+        .page-loader {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: var(--accent-gradient);
-            border: none;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: var(--transition-smooth);
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid var(--text-light);
             border-radius: 50%;
-            color: white;
-            cursor: pointer;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .page-loader.hidden {
             opacity: 0;
             visibility: hidden;
-            transition: var(--transition);
-            z-index: 1000;
-        }
-
-        .scroll-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-top:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
         }
     </style>
 </head>
 <body>
-    <div class="animated-bg"></div>
-    
-    <header class="header">
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="animated-background"></div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header" id="header">
         <nav class="nav-container">
-            <a href="https://myexcelweb.github.io/home/" class="logo">
-                <i class="fas fa-tools"></i>
-                <span>MyExcelWeb</span>
-                <div class="domain-badge">myexcelweb.github.io</div>
+            <a href="https://smartfiles.netlify.app/" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <span>SmartFiles & MyExcelWeb</span>
             </a>
+            <div class="domain-badges">
+                <div class="domain-badge primary">smartfiles.netlify.app</div>
+                <div class="domain-badge">myexcelweb.github.io</div>
+            </div>
         </nav>
     </header>
 
-    <main class="container">
-        <section class="hero-section">
-            <h1 class="hero-title">Professional Digital Tools Suite</h1>
-            <p class="hero-subtitle">Transform your workflow with our comprehensive collection of professional tools</p>
-            <div style="background: rgba(255, 255, 255, 0.15); padding: 1rem 2rem; border-radius: 30px; display: inline-block; margin-bottom: 2rem; backdrop-filter: blur(10px);">
-                <span style="color: var(--text-light); font-weight: 600; font-size: 1.1rem;">🌐 Visit us at: </span>
-                <span style="color: white; font-weight: 700; font-size: 1.2rem;">myexcelweb.github.io/home</span>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-elements">
+            <div class="floating-card">
+                <i class="fas fa-file-pdf" style="font-size: 2rem; color: #4facfe;"></i>
             </div>
-            <p class="hero-description">
-                Streamline your daily tasks with our powerful suite of digital tools designed for professionals, 
-                businesses, and individuals who demand efficiency and precision.
-            </p>
-        </section>
+            <div class="floating-card">
+                <i class="fas fa-image" style="font-size: 2rem; color: #f5576c;"></i>
+            </div>
+            <div class="floating-card">
+                <i class="fas fa-file-excel" style="font-size: 2rem; color: #38ef7d;"></i>
+            </div>
+            <div class="floating-card">
+                <i class="fas fa-chart-line" style="font-size: 2rem; color: #fc466b;"></i>
+            </div>
+        </div>
 
-        <section class="tools-section">
-            <h2 class="section-title">Our Professional Tools</h2>
-            <p class="section-subtitle">
-                Choose from our comprehensive collection of specialized tools designed to boost your productivity
-            </p>
+        <div class="hero-content">
+            <h1 class="hero-title">Advanced Digital Tools Suite</h1>
+            <p class="hero-subtitle">SmartFiles & MyExcelWeb - Experience the future of professional productivity</p>
             
-            <div class="tools-grid">
-                <!-- PDF Editor -->
-                <a href="https://pdf-pro.netlify.app/" class="tool-card fade-in">
-                    <div class="tool-icon">
-                        <i class="fas fa-file-pdf"></i>
-                    </div>
-                    <h3 class="tool-title">PDF Document Editor Pro</h3>
-                    <p class="tool-description">
-                        Professional PDF editing solution with advanced features. Merge, compress, split, insert pages, and add watermarks with ease.
-                    </p>
-                    <ul class="tool-features">
-                        <li><i class="fas fa-check"></i> Merge multiple PDF files</li>
-                        <li><i class="fas fa-check"></i> Advanced PDF compression</li>
-                        <li><i class="fas fa-check"></i> Split by page ranges or individual pages</li>
-                        <li><i class="fas fa-check"></i> Insert pages at specific positions</li>
-                        <li><i class="fas fa-check"></i> Add watermarks and stamps</li>
-                    </ul>
-                    <button class="tool-button">Launch PDF Editor</button>
+            <div class="dual-sites-info">
+                <div class="site-info primary">
+                    <i class="fas fa-globe"></i> smartfiles.netlify.app
+                </div>
+                <div class="site-info">
+                    <i class="fas fa-home"></i> myexcelweb.github.io/home
+                </div>
+            </div>
+            
+            <p class="hero-description">
+                Unlock your potential with our cutting-edge collection of digital tools designed for the modern professional. 
+                Seamlessly integrate powerful features into your workflow with stunning design and lightning-fast performance across both platforms.
+            </p>
+            <div class="cta-container">
+                <a href="#tools" class="cta-button cta-primary">
+                    <i class="fas fa-rocket"></i> Explore Tools
                 </a>
-
-               <!-- Image Background Studio -->
-<a href="https://bg-pro.streamlit.app/" class="tool-card fade-in" target="_blank" rel="noopener">
-    <div class="tool-icon">
-        <i class="fas fa-image"></i>
-    </div>
-    <h3 class="tool-title">Image Background Studio</h3>
-    <p class="tool-description">
-        Advanced image editing: remove or replace backgrounds quickly.
-    </p>
-    <ul class="tool-features">
-        <li><i class="fas fa-check"></i> AI-powered background removal</li>
-        <li><i class="fas fa-check"></i> Custom background replacement</li>
-        <li><i class="fas fa-check"></i> Batch processing support</li>
-        <li><i class="fas fa-check"></i> High-resolution output</li>
-        <li><i class="fas fa-check"></i> Multiple format support</li>
-    </ul>
-    <button class="tool-button">Launch Image Studio</button>
-</a>
-
-                <!-- Excel File Merger -->
-                <a href="https://myexcelweb.github.io/merge/" class="tool-card fade-in">
-                    <div class="tool-icon">
-                        <i class="fas fa-file-excel"></i>
-                    </div>
-                    <h3 class="tool-title">Excel File Merger Pro</h3>
-                    <p class="tool-description">
-                        Powerful tool to merge multiple Excel files into one comprehensive workbook. Maintain formatting and data integrity.
-                    </p>
-                    <ul class="tool-features">
-                        <li><i class="fas fa-check"></i> Merge multiple Excel files</li>
-                        <li><i class="fas fa-check"></i> Preserve original formatting</li>
-                        <li><i class="fas fa-check"></i> Custom sheet organization</li>
-                        <li><i class="fas fa-check"></i> Data validation</li>
-                        <li><i class="fas fa-check"></i> Batch processing</li>
-                    </ul>
-                    <button class="tool-button">Launch Excel Merger</button>
+                <a href="https://smartfiles.netlify.app/" class="cta-button cta-secondary">
+                    <i class="fas fa-external-link-alt"></i> SmartFiles
                 </a>
-
-                <!-- Legal Fee Calculator Suite -->
-                <a href="https://courtexcel.netlify.app/home" class="tool-card fade-in">
-                    <div class="tool-icon">
-                        <i class="fas fa-gavel"></i>
-                    </div>
-                    <h3 class="tool-title">Legal Fee Calculator Suite</h3>
-                    <p class="tool-description">
-                        Comprehensive legal fee calculation system including court fees, advocate fees, and probate procedures all in one platform.
-                    </p>
-                    <ul class="tool-features">
-                        <li><i class="fas fa-check"></i> Court fee calculations</li>
-                        <li><i class="fas fa-check"></i> Advocate fee estimation</li>
-                        <li><i class="fas fa-check"></i> Probate fee calculator (integrated)</li>
-                        <li><i class="fas fa-check"></i> Up-to-date fee structures</li>
-                        <li><i class="fas fa-check"></i> Detailed breakdowns</li>
-                    </ul>
-                    <button class="tool-button">Launch Calculator Suite</button>
-                </a>
-
-                <!-- Excel Processing Tools -->
-                <a href="https://courtexcel.netlify.app/excel" class="tool-card fade-in">
-                    <div class="tool-icon">
-                        <i class="fas fa-table"></i>
-                    </div>
-                    <h3 class="tool-title">Excel Processing Center</h3>
-                    <p class="tool-description">
-                        Advanced Excel processing tools for data manipulation, analysis, and transformation between formats.
-                    </p>
-                    <ul class="tool-features">
-                        <li><i class="fas fa-check"></i> Excel to Excel conversion</li>
-                        <li><i class="fas fa-check"></i> Data cleaning and validation</li>
-                        <li><i class="fas fa-check"></i> Format standardization</li>
-                        <li><i class="fas fa-check"></i> Bulk operations</li>
-                        <li><i class="fas fa-check"></i> Error detection</li>
-                    </ul>
-                    <button class="tool-button">Launch Excel Tools</button>
-                </a>
-
-                <!-- Year-wise Data Analytics -->
-                <a href="https://yearwisedata.netlify.app/" class="tool-card fade-in">
-                    <div class="tool-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="tool-title">Year-wise Data Analytics</h3>
-                    <p class="tool-description">
-                        Comprehensive data analysis tool for year-wise reporting with Excel and PDF export capabilities.
-                    </p>
-                    <ul class="tool-features">
-                        <li><i class="fas fa-check"></i> Year-wise data analysis</li>
-                        <li><i class="fas fa-check"></i> Excel report generation</li>
-                        <li><i class="fas fa-check"></i> PDF export functionality</li>
-                        <li><i class="fas fa-check"></i> Visual charts and graphs</li>
-                        <li><i class="fas fa-check"></i> Custom date ranges</li>
-                    </ul>
-                    <button class="tool-button">Launch Analytics</button>
+                <a href="https://myexcelweb.github.io/home/" class="cta-button">
+                    <i class="fas fa-home"></i> MyExcelWeb
                 </a>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="features-section">
-            <h2 class="section-title">Why Choose Our Tools?</h2>
-            <div class="features-grid">
-                <div class="feature-item">
+    <!-- Tools Section -->
+    <section class="tools-section" id="tools">
+        <div class="section-header">
+            <h2 class="section-title">Premium Professional Tools</h2>
+            <p class="section-subtitle">
+                Discover our comprehensive suite of advanced tools designed to revolutionize your workflow
+            </p>
+        </div>
+
+        <div class="tools-grid">
+            <!-- PDF Editor Pro -->
+            <a href="https://pdf-pro.netlify.app/" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h3 class="tool-title">PDF Document Editor Pro</h3>
+                <p class="tool-description">
+                    Revolutionary PDF editing solution with AI-powered features. Advanced compression, intelligent merging, and professional watermarking.
+                </p>
+                <ul class="tool-features">
+                    <li><i class="fas fa-magic"></i> AI-powered PDF optimization</li>
+                    <li><i class="fas fa-compress-arrows-alt"></i> Ultra compression technology</li>
+                    <li><i class="fas fa-layer-group"></i> Smart merge & split functions</li>
+                    <li><i class="fas fa-stamp"></i> Professional watermarking</li>
+                    <li><i class="fas fa-shield-alt"></i> Secure processing</li>
+                </ul>
+                <button class="tool-button">Launch PDF Editor</button>
+            </a>
+
+            <!-- Image Background Studio -->
+            <a href="https://bg-pro.streamlit.app/" class="tool-card" target="_blank">
+                <div class="tool-icon">
+                    <i class="fas fa-image"></i>
+                </div>
+                <h3 class="tool-title">AI Image Background Studio</h3>
+                <p class="tool-description">
+                    Next-generation image editing powered by artificial intelligence. Remove, replace, and enhance backgrounds with professional precision.
+                </p>
+                <ul class="tool-features">
+                    <li><i class="fas fa-brain"></i> Advanced AI processing</li>
+                    <li><i class="fas fa-magic"></i> One-click background removal</li>
+                    <li><i class="fas fa-palette"></i> Smart background replacement</li>
+                    <li><i class="fas fa-layer-group"></i> Batch processing support</li>
+                    <li><i class="fas fa-expand-arrows-alt"></i> 4K output quality</li>
+                </ul>
+                <button class="tool-button">Launch Image Studio</button>
+            </a>
+
+            <!-- Excel File Merger Pro -->
+            <a href="https://myexcelweb.github.io/merge/" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-file-excel"></i>
+                </div>
+                <h3 class="tool-title">Excel Merger Pro</h3>
+                <p class="tool-description">
+                    Intelligent Excel file merging with advanced data preservation. Maintain formulas, formatting, and data integrity across multiple files.
+                </p>
+                <ul class="tool-features">
+                    <li><i class="fas fa-code-branch"></i> Smart merge algorithms</li>
+                    <li><i class="fas fa-palette"></i> Format preservation</li>
+                    <li><i class="fas fa-sitemap"></i> Custom sheet organization</li>
+                    <li><i class="fas fa-check-double"></i> Data validation</li>
+                    <li><i class="fas fa-bolt"></i> Lightning-fast processing</li>
+                </ul>
+                <button class="tool-button">Launch Excel Merger</button>
+            </a>
+
+            <!-- Legal Fee Calculator Suite -->
+            <a href="https://advfee.netlify.app/" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <h3 class="tool-title">Legal Calculator Suite</h3>
+                <p class="tool-description">
+                    Comprehensive legal fee calculation system with real-time updates. Court fees, advocate charges, and probate calculations in one platform.
+                </p>
+                <ul class="tool-features">
+                    <li><i class="fas fa-calculator"></i> Real-time calculations</li>
+                    <li><i class="fas fa-balance-scale"></i> Court fee precision</li>
+                    <li><i class="fas fa-user-tie"></i> Advocate fee estimation</li>
+                    <li><i class="fas fa-file-contract"></i> Probate calculator</li>
+                    <li><i class="fas fa-sync-alt"></i> Updated fee structures</li>
+                </ul>
+                <button class="tool-button">Launch Calculator</button>
+            </a>
+
+            <!-- Excel Processing Center -->
+            <a href="https://xl-pro.netlify.app/" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+                <h3 class="tool-title">Excel Pro Center</h3>
+                <p class="tool-description">
+                    Advanced Excel transformation hub with intelligent data processing. Clean, validate, and convert Excel files with professional precision.
+                </p>
+                <ul class="tool-features">
+                    <li><i class="fas fa-exchange-alt"></i> Format conversion</li>
+                    <li><i class="fas fa-broom"></i> Data cleaning tools</li>
+                    <li><i class="fas fa-check-circle"></i> Smart validation</li>
+                    <li><i class="fas fa-cogs"></i> Bulk operations</li>
+                    <li><i class="fas fa-bug"></i> Error detection</li>
+                </ul>
+                <button class="tool-button">Launch Excel Tools</button>
+            </a>
+
+            <!-- Year-wise Data Analytics -->
+            <a href="https://yearwisedata.netlify.app/" class="tool-card">
+                <div class="tool-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="tool-title">Analytics Dashboard</h3>
+                <p class="tool-description">
+                    Intelligent data analytics platform with beautiful visualizations. Transform your data into actionable insights with advanced reporting.
+                </p>
+                <ul class="tool-features">
+                    <li><i class="fas fa-chart-bar"></i> Interactive dashboards</li>
+                    <li><i class="fas fa-file-excel"></i> Excel export</li>
+                    <li><i class="fas fa-file-pdf"></i> PDF reports</li>
+                    <li><i class="fas fa-eye"></i> Visual analytics</li>
+                    <li><i class="fas fa-calendar-alt"></i> Custom date ranges</li>
+                </ul>
+                <button class="tool-button">Launch Analytics</button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="section-header">
+            <h2 class="section-title">Why Choose Our Platform?</h2>
+            <p class="section-subtitle">Experience the difference with cutting-edge technology and user-centric design</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">
                     <i class="fas fa-rocket"></i>
-                    <h3>Fast & Efficient</h3>
-                    <p>Lightning-fast processing with optimized algorithms for maximum efficiency</p>
                 </div>
-                <div class="feature-item">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Secure & Private</h3>
-                    <p>Your data is processed securely with privacy protection at every step</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Mobile Friendly</h3>
-                    <p>Responsive design that works perfectly on all devices and screen sizes</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-sync"></i>
-                    <h3>Always Updated</h3>
-                    <p>Regular updates with new features and improvements based on user feedback</p>
-                </div>
+                <h3 class="feature-title">Lightning Performance</h3>
+                <p class="feature-description">
+                    Optimized algorithms and cloud infrastructure deliver blazing-fast processing speeds for all your tasks
+                </p>
             </div>
-        </section>
-    </main>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Bank-Level Security</h3>
+                <p class="feature-description">
+                    Your data is protected with enterprise-grade encryption and privacy-first processing standards
+                </p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">Responsive Design</h3>
+                <p class="feature-description">
+                    Seamless experience across all devices with adaptive design that works perfectly everywhere
+                </p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">AI-Powered</h3>
+                <p class="feature-description">
+                    Intelligent automation and machine learning enhance every tool for smarter, faster results
+                </p>
+            </div>
+        </div>
+    </section>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
-            <div class="footer-title">MyExcelWeb</div>
+            <div class="footer-logo">SmartFiles & MyExcelWeb</div>
             <p class="footer-description">
-                Professional digital tools suite designed to streamline your workflow and boost productivity. 
-                Trusted by professionals worldwide for reliable, efficient, and secure document processing.
+                Pioneering the future of digital productivity with advanced tools and intelligent design. 
+                Trusted by professionals worldwide for reliable, secure, and innovative solutions across both platforms.
             </p>
+            
+            <div class="site-urls">
+                <a href="https://smartfiles.netlify.app/">
+                    <i class="fas fa-globe"></i> smartfiles.netlify.app
+                </a>
+                <a href="https://myexcelweb.github.io/home/">
+                    <i class="fas fa-home"></i> myexcelweb.github.io/home
+                </a>
+            </div>
             
             <div class="footer-info">
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <p><a href="#tools">Our Tools</a></p>
-                    <p><a href="#features">Features</a></p>
-                    <p><a href="https://myexcelweb.github.io/home/">Homepage</a></p>
+                    <h4>Quick Navigation</h4>
+                    <p><a href="#tools">Professional Tools</a></p>
+                    <p><a href="#features">Platform Features</a></p>
+                    <p><a href="https://smartfiles.netlify.app/">SmartFiles Platform</a></p>
+                    <p><a href="https://myexcelweb.github.io/home/">MyExcelWeb Platform</a></p>
                 </div>
                 <div class="footer-section">
-                    <h4>Website & Contact</h4>
-                    <p><strong>Website:</strong> <a href="https://myexcelweb.github.io/home/" style="color: #4facfe;">myexcelweb.github.io/home</a></p>
-                    <p><strong>Email:</strong> parimal.court@gmail.com</p>
+                    <h4>Contact & Support</h4>
+                    <p><strong>Primary Site:</strong> <a href="https://smartfiles.netlify.app/" style="color: #4facfe;">smartfiles.netlify.app</a></p>
+                    <p><strong>Secondary Site:</strong> <a href="https://myexcelweb.github.io/home/" style="color: #4facfe;">myexcelweb.github.io/home</a></p>
+                    <p><strong>Email:</strong> <a href="mailto:parimal.court@gmail.com">parimal.court@gmail.com</a></p>
+                    <p><strong>Platform:</strong> Professional Digital Solutions</p>
                 </div>
             </div>
             
             <div class="footer-bottom">
                 <div class="developer-info">
-                    Designed & Developed by Parimal J. Hodar
+                    🖥️ Designed & Developed by Parimal J. Hodar
                 </div>
                 <div class="contact-info">
-                    Professional Digital Solutions | parimal.court@gmail.com
+                    Innovation • Excellence • Security | parimal.court@gmail.com
                 </div>
                 <p style="margin-top: 1rem; opacity: 0.7; font-size: 0.9rem;">
-                    © 2024 MyExcelWeb - <a href="https://myexcelweb.github.io/home/" style="color: #4facfe; text-decoration: none;">myexcelweb.github.io/home</a> | All rights reserved. This platform provides professional tools for document processing and legal calculations.
+                    # 2024 SmartFiles & MyExcelWeb | 
+                    <a href="https://smartfiles.netlify.app/" style="color: #4facfe; text-decoration: none;">smartfiles.netlify.app</a> • 
+                    <a href="https://myexcelweb.github.io/home/" style="color: #4facfe; text-decoration: none;">myexcelweb.github.io/home</a>
+                    | Advanced digital tools for modern professionals.
                 </p>
             </div>
         </div>
     </footer>
 
+    <!-- Scroll to Top Button -->
     <button class="scroll-top" id="scrollTop">
         <i class="fas fa-chevron-up"></i>
     </button>
 
     <script>
-        // Smooth scrolling and animations
+        // Advanced JavaScript for Enhanced User Experience
         document.addEventListener('DOMContentLoaded', function() {
-            // Fade in animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            });
-
-            document.querySelectorAll('.fade-in').forEach(el => {
-                observer.observe(el);
-            });
-
-            // Scroll to top button
+            // Page Loader
+            const pageLoader = document.getElementById('pageLoader');
+            const header = document.getElementById('header');
             const scrollTopBtn = document.getElementById('scrollTop');
-            
+            const particlesContainer = document.getElementById('particles');
+
+            // Hide loader after page load
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    pageLoader.classList.add('hidden');
+                    document.body.style.overflow = 'visible';
+                    initAnimations();
+                }, 1000);
+            });
+
+            // Create floating particles
+            function createParticles() {
+                for (let i = 0; i < 50; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.width = Math.random() * 4 + 2 + 'px';
+                    particle.style.height = particle.style.width;
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
+            createParticles();
+
+            // Header scroll effect
+            let lastScrollY = window.scrollY;
             window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 300) {
+                const currentScrollY = window.scrollY;
+                
+                // Header background on scroll
+                if (currentScrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+
+                // Scroll to top button
+                if (currentScrollY > 500) {
                     scrollTopBtn.classList.add('visible');
                 } else {
                     scrollTopBtn.classList.remove('visible');
                 }
+
+                lastScrollY = currentScrollY;
             });
 
+            // Scroll to top functionality
             scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            // Coming soon notification
-            document.querySelectorAll('.coming-soon').forEach(card => {
-                card.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const title = card.querySelector('.tool-title').textContent;
-                    showNotification('This feature is coming soon! Stay tuned for updates.');
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
                 });
             });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-up');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe tool cards for animation
+            function initAnimations() {
+                const toolCards = document.querySelectorAll('.tool-card');
+                const featureItems = document.querySelectorAll('.feature-item');
+                
+                toolCards.forEach((card, index) => {
+                    card.style.animationDelay = (index * 0.1) + 's';
+                    observer.observe(card);
+                });
+
+                featureItems.forEach((item, index) => {
+                    item.style.animationDelay = (index * 0.1) + 's';
+                    observer.observe(item);
+                });
+            }
+
+            // Tool card hover effects
+            document.querySelectorAll('.tool-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-15px) rotateX(8deg)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0deg)';
+                });
+            });
+
+            // Button ripple effect
+            document.querySelectorAll('.tool-button, .cta-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // Advanced parallax effect for floating elements
+            document.addEventListener('mousemove', function(e) {
+                const floatingCards = document.querySelectorAll('.floating-card');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+
+                floatingCards.forEach((card, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const x = (mouseX - 0.5) * speed * 50;
+                    const y = (mouseY - 0.5) * speed * 50;
+                    card.style.transform = `translate(${x}px, ${y}px) rotate(${x * 0.1}deg)`;
+                });
+            });
+
+            // Performance optimization - Throttled scroll events
+            let ticking = false;
+            function updateOnScroll() {
+                // Update scroll-dependent elements here
+                ticking = false;
+            }
+
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(updateOnScroll);
+                    ticking = true;
+                }
+            }
+
+            // Error handling for external links
+            document.querySelectorAll('a[href^="http"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Add loading state or analytics here if needed
+                    console.log('External link clicked:', this.href);
+                });
+            });
+
+            // Notification system
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)' : 
+                                type === 'error' ? 'linear-gradient(135deg, #fc466b 0%, #3f5efb 100%)' : 
+                                'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'};
+                    color: white;
+                    padding: 1rem 2rem;
+                    border-radius: 50px;
+                    z-index: 10000;
+                    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    animation: slideInRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    font-weight: 600;
+                `;
+                notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}-circle" style="margin-right: 0.5rem;"></i>${message}`;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOutRight 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
+                    setTimeout(() => notification.remove(), 500);
+                }, 4000);
+            }
+
+            // Add CSS for notification animations
+            const notificationStyles = document.createElement('style');
+            notificationStyles.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOutRight {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(notificationStyles);
+
+            // Welcome message
+            setTimeout(() => {
+                showNotification('Welcome to SmartFiles & MyExcelWeb Professional Tools Suite!', 'success');
+            }, 2000);
         });
 
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--accent-gradient);
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 12px;
-                z-index: 10000;
-                box-shadow: var(--shadow-lg);
-                animation: slideInRight 0.3s ease-out;
-            `;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.style.animation = 'slideOutRight 0.3s ease-out forwards';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+        // Service Worker for PWA capabilities (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js').then(function(registration) {
+                    console.log('SW registered: ', registration);
+                }).catch(function(registrationError) {
+                    console.log('SW registration failed: ', registrationError);
+                });
+            });
         }
     </script>
 </body>
 </html>
-
-
-
